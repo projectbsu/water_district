@@ -16,45 +16,10 @@ if (isset($_POST['submit'])) {
     $name = remove_junk($db->escape($_POST['name']));
     $email = remove_junk($db->escape($_POST['email']));
     $contact = remove_junk($db->escape($_POST['contact']));
+    $account_number = remove_junk($db->escape($_POST['account_number']));
     $gender = remove_junk($db->escape($_POST['gender']));
     $barangay = remove_junk($db->escape($_POST['barangay']));
     $status = 'Pending'; // Default status
-
-    // Check if user ID is available
-    if ($current_user_id) {
-        // Insert into service_requests
-        $sql = "INSERT INTO service_requests (customer_user_id, name, email, contact, gender, barangay, status) 
-                VALUES ('$current_user_id', '$name', '$email', '$contact', '$gender', '$barangay', '$status')";
-
-        if ($db->query($sql)) {
-            // Get the last inserted service request ID
-            $last_request_id = $db->insert_id;
-
-            // Insert into transactions table
-            $transaction_detail = "$name send a service request.";
-            $transaction_time = date('Y-m-d H:i:s'); // Current timestamp
-
-            $transaction_sql = "INSERT INTO transactions (customer_user_id, transaction_detail, transaction_time)
-                                VALUES ('$current_user_id', '$transaction_detail', '$transaction_time')";
-
-            if ($db->query($transaction_sql)) {
-                $session->msg('s', "Request added and transaction recorded!");
-                redirect('service_requests.php', false);
-            } else {
-                // Handle transaction error
-                echo "Transaction SQL Error: " . $db->error; // Temporary for debugging
-                $session->msg('d', "Failed to record transaction.");
-                redirect('add_request.php', false);
-            }
-        } else {
-            // Debugging: Log the SQL error
-            echo "SQL Error: " . $db->error; // Temporary for debugging
-            $session->msg('d', "Failed to add request.");
-            redirect('add_request.php', false);
-        }
-    } else {
-        echo "No user ID found"; // Debugging message
-    }
 }
 
 
@@ -68,8 +33,8 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="panel-body">
                 <form method="post" action="add_request.php">
-                    <div class="form-group">
-                        <label for="name">Name</label>
+                <div class="form-group">
+                    <label for="name">Name</label>
                         <input type="text" class="form-control" name="name" required>
                     </div>
                     <div class="form-group">
@@ -79,6 +44,10 @@ if (isset($_POST['submit'])) {
                     <div class="form-group">
                         <label for="contact">Contact</label>
                         <input type="text" class="form-control" name="contact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="account_number">Account Number</label>
+                        <input type="text" class="form-control" name="account_number" required>
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender</label>

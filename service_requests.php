@@ -40,48 +40,50 @@ $all_requests = find_all_service_requests($status_filter); // Modify your functi
                 </form>
                 
                 <table class="table table-bordered table-striped">
-                    <thead>
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 50px;">#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Account Number</th>
+                        <th>Gender</th>
+                        <th>Barangay</th>
+                        <th>Status</th>
+                        <th>Date of Request</th>
+                        <th class="text-center" style="width: 100px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($all_requests as $request): ?>
                         <tr>
-                            <th class="text-center" style="width: 50px;">#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>Gender</th>
-                            <th>Barangay</th>
-                            <th>Status</th>
-                            <th>Date of Request</th>
-                            <th class="text-center" style="width: 100px;">Actions</th>
+                            <td class="text-center"><?php echo count_id(); ?></td>
+                            <td><?php echo remove_junk(ucwords($request['name'])); ?></td>
+                            <td><?php echo remove_junk($request['email']); ?></td>
+                            <td><?php echo remove_junk($request['account_number']); ?></td> <!-- Displaying Account Number -->
+                            <td><?php echo remove_junk($request['contact']); ?></td>
+                            <td><?php echo remove_junk($request['gender']); ?></td>
+                            <td><?php echo remove_junk($request['barangay']); ?></td>
+                            <td>
+                                <span class="label <?php echo get_status_class($request['status']); ?>">
+                                    <?php echo remove_junk(ucwords($request['status'])); ?>
+                                </span>
+                            </td>
+                            <td><?php echo remove_junk($request['date_of_request']); ?></td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <a href="edit_request.php?id=<?php echo (int)$request['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                    <a href="delete_request.php?id=<?php echo (int)$request['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($all_requests as $request): ?>
-                            <tr>
-                                <td class="text-center"><?php echo count_id(); ?></td>
-                                <td><?php echo remove_junk(ucwords($request['name'])); ?></td>
-                                <td><?php echo remove_junk($request['email']); ?></td>
-                                <td><?php echo remove_junk($request['contact']); ?></td>
-                                <td><?php echo remove_junk($request['gender']); ?></td>
-                                <td><?php echo remove_junk($request['barangay']); ?></td>
-                                <td>
-                                    <span class="label <?php echo get_status_class($request['status']); ?>">
-                                        <?php echo remove_junk(ucwords($request['status'])); ?>
-                                    </span>
-                                </td>
-                                <td><?php echo remove_junk($request['date_of_request']); ?></td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <a href="edit_request.php?id=<?php echo (int)$request['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
-                                            <i class="glyphicon glyphicon-pencil"></i>
-                                        </a>
-                                        <a href="delete_request.php?id=<?php echo (int)$request['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
-                                            <i class="glyphicon glyphicon-remove"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                    <?php endforeach; ?>
+                </tbody>
+
             </div>
         </div>
     </div>

@@ -130,10 +130,4 @@ function find_all_service_requests() {
   return $db->query($sql);
 }
 
-function find_all_transactions() {
-  global $db;
-  $sql = "SELECT * FROM transactions";
-  return $db->query($sql);
-}
-
 ?>

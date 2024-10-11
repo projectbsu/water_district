@@ -28,6 +28,14 @@
   $total_categories = count_all_categories();
   $total_service_requests = count_all_service_requests();
 
+
+    // Fetch data for feedback charts
+  $feedback_reaction_distribution = get_feedback_reaction_distribution(); // Reaction distribution
+  $feedback_sentiment_distribution = get_feedback_sentiment_distribution(); // Sentiment score distribution
+  $feedback_rating_over_time = get_feedback_rating_over_time(); // Average rating over time
+  $feedback_per_user = get_feedback_per_user(); // Number of feedback per user
+  $feedback_per_date = get_feedback_per_date(); // Number of feedback per date
+
   include_once('layouts/header.php');
 ?>
 
@@ -139,6 +147,40 @@
     <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <strong>
+          <span> Feedback Dashboard</span>
+        </strong>
+      </div>
+      <div class="panel-body">
+            <div class="row">
+          <div class="col-md-4">
+              <canvas id="feedbackReactionChart"></canvas>
+          </div>
+          <div class="col-md-4">
+              <canvas id="feedbackSentimentChart"></canvas>
+          </div>
+          <div class="col-md-4">
+              <canvas id="feedbackRatingOverTimeChart"></canvas>
+          </div>
+          <div class="col-md-4">
+              <canvas id="feedbackPerUserChart"></canvas>
+          </div>
+          <div class="col-md-4">
+              <canvas id="feedbackPerDateChart"></canvas>
+          </div>
+      </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <strong>
           <span> Service Dashboard</span>
         </strong>
       </div>
@@ -148,26 +190,6 @@
       </div>
     </div>
   </div>
-
-  <div class="row">
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading clearfix">
-        <strong>
-          <span> Feedback Dashboard</span>
-        </strong>
-      </div>
-      <div class="panel-body">
-      
-          </div>
-      </div>
-    </div>
-  </div>
-
-
-
 
 
 
@@ -361,4 +383,141 @@
     }
   });
   
+</script> 
+
+
+<script>
+    // Feedback Reaction Distribution Chart
+    var ctx1 = document.getElementById('feedbackReactionChart').getContext('2d');
+    var feedbackReactionChart = new Chart(ctx1, {
+        type: 'pie',
+        data: {
+            labels: <?php echo json_encode(array_column($feedback_reaction_distribution, 'reaction')); ?>,
+            datasets: [{
+                label: 'Reactions',
+                data: <?php echo json_encode(array_column($feedback_reaction_distribution, 'count')); ?>,
+                backgroundColor: bluePalette
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Feedback Reaction Distribution',
+                fontSize: 18
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    });
+
+    // Feedback Sentiment Score Distribution Chart
+    var ctx2 = document.getElementById('feedbackSentimentChart').getContext('2d');
+    var feedbackSentimentChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode(array_column($feedback_sentiment_distribution, 'sentiment_score')); ?>,
+            datasets: [{
+                label: 'Sentiment Scores',
+                data: <?php echo json_encode(array_column($feedback_sentiment_distribution, 'count')); ?>,
+                backgroundColor: bluePalette[1]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Feedback Sentiment Score Distribution',
+                fontSize: 18
+            },
+            scales: {
+                yAxes: [{ ticks: { beginAtZero: true } }]
+            },
+            legend: { display: false }
+        }
+    });
+
+    // Average Rating Over Time Chart
+    var ctx3 = document.getElementById('feedbackRatingOverTimeChart').getContext('2d');
+    var feedbackRatingOverTimeChart = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: <?php echo json_encode(array_column($feedback_rating_over_time, 'date')); ?>,
+            datasets: [{
+                label: 'Average Rating',
+                data: <?php echo json_encode(array_column($feedback_rating_over_time, 'avg_rating')); ?>,
+                borderColor: bluePalette[0],
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Average Rating Over Time',
+                fontSize: 18
+            },
+            scales: {
+                yAxes: [{ ticks: { beginAtZero: true } }]
+            }
+        }
+    });
+
+    // Feedback Per User Chart
+    var ctx4 = document.getElementById('feedbackPerUserChart').getContext('2d');
+    var feedbackPerUserChart = new Chart(ctx4, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode(array_column($feedback_per_user, 'name')); ?>,
+            datasets: [{
+                label: 'Feedback Count',
+                data: <?php echo json_encode(array_column($feedback_per_user, 'feedback_count')); ?>,
+                backgroundColor: bluePalette[2]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Feedback Per User',
+                fontSize: 18
+            },
+            scales: {
+                yAxes: [{ ticks: { beginAtZero: true } }]
+            },
+            legend: { display: false }
+        }
+    });
+
+    // Feedback Per Date Chart
+    var ctx5 = document.getElementById('feedbackPerDateChart').getContext('2d');
+    var feedbackPerDateChart = new Chart(ctx5, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode(array_column($feedback_per_date, 'date')); ?>,
+            datasets: [{
+                label: 'Feedback Count',
+                data: <?php echo json_encode(array_column($feedback_per_date, 'feedback_count')); ?>,
+                backgroundColor: bluePalette[3]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Feedback Per Date',
+                fontSize: 18
+            },
+            scales: {
+                yAxes: [{ ticks: { beginAtZero: true } }]
+            },
+            legend: { display: false }
+        }
+    });
 </script>

@@ -19,7 +19,7 @@
     <ul class="nav submenu">
       <li><a href="group.php">Manage Groups</a> </li>
       <li><a href="users.php">Manage Users</a> </li>
-      <li><a href="">Customer List</a></li>
+      <li><a href="customer.php">Customer List</a></li>
    </ul>
   </li>
   <li>

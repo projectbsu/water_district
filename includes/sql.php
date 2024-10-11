@@ -142,7 +142,7 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_all_user(){
     global $db;
-    $sql = "SELECT u.id,u.name,u.username,u.user_level,u.status,u.email,u.contact,u.sex,u.barangay,u.age,";
+    $sql = "SELECT u.id,u.name,u.username,u.account_number,u.user_level,u.status,u.email,u.contact,u.sex,u.barangay,u.age,";
     $sql .= "g.group_name ";
     $sql .= "FROM users u ";
     $sql .= "LEFT JOIN user_groups g ON g.group_level=u.user_level ORDER BY u.name ASC";
@@ -388,10 +388,48 @@ function get_customer_barangay_distribution() {
   
   return $barangay_distribution;
 }
+ 
 
+// Get reaction distribution
+function get_feedback_reaction_distribution() {
+  global $db;
+  $sql = "SELECT reaction, COUNT(*) as count FROM feedback GROUP BY reaction";
+  return find_by_sql($sql);
+}
 
+// Get sentiment score distribution
+function get_feedback_sentiment_distribution() {
+  global $db;
+  $sql = "SELECT sentiment_score, COUNT(*) as count FROM feedback GROUP BY sentiment_score";
+  return find_by_sql($sql);
+}
 
+// Get average rating over time
+function get_feedback_rating_over_time() {
+  global $db;
+  $sql = "SELECT DATE(created_at) as date, AVG(reaction) as avg_reaction FROM feedback GROUP BY DATE(created_at)";
+  return find_by_sql($sql);
+}
 
+// Get number of feedback per user
+function get_feedback_per_user() {
+  global $db;
+  $sql = "SELECT u.name, COUNT(f.id) as feedback_count FROM feedback f LEFT JOIN users u ON f.user_id = u.id GROUP BY f.user_id";
+  return find_by_sql($sql);
+}
+
+// Get number of feedback per date
+function get_feedback_per_date() {
+  global $db;
+  $sql = "SELECT DATE(created_at) as date, COUNT(*) as feedback_count FROM feedback GROUP BY DATE(created_at)";
+  return find_by_sql($sql);
+}
+ 
+function find_users_by_role($role_id) {
+  global $db;
+  $sql = "SELECT * FROM users WHERE user_level = '{$db->escape($role_id)}'";
+  return find_by_sql($sql);
+}
 
 
 

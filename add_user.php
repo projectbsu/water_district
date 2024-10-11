@@ -14,6 +14,7 @@
    if(empty($errors)){
            $name   = remove_junk($db->escape($_POST['full-name']));
        $username   = remove_junk($db->escape($_POST['username']));
+       $account_number = remove_junk($db->escape($_POST['account_number'])); // Make sure this is added
        $email = remove_junk($db->escape($_POST['email']));
         $contact = remove_junk($db->escape($_POST['contact']));
         $sex = remove_junk($db->escape($_POST['sex']));
@@ -63,6 +64,10 @@
                 <label for="username">Username</label>
                 <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
+            <div class="form-group">
+              <label for="account_number" class="control-label">Account Number</label>
+              <input type="text" class="form-control" name="account_number" required>
+          </div>
             <div class="form-group">
             <label for="email">Email</label>
             <input type="email" class="form-control" name="email" placeholder="Email">
