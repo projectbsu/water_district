@@ -34,15 +34,28 @@
    </ul>
   </li>
   <li>
-    <a href="#" >
-      <i class="glyphicon glyphicon-usd"></i>
-      <span>Billing</span>
+    <a href="#" class="submenu-toggle">
+    <i class="glyphicon glyphicon-usd"></i>
+      <span>Biling</span>
     </a>
+    <ul class="nav submenu">
+      <li><a href="billing_notice.php">Billing Form</a> </li>
+       <li><a href="billing_list.php">Billing List</a> </li>
+       <li><a href="service_requests.php">Billing Report</a> </li>
+   </ul>
   </li>
+  
   <li>
     <a href="transactions.php" >
       <i class="glyphicon glyphicon-tasks"></i>
       <span>Transaction</span>
+    </a>
+  </li>
+
+  <li>
+    <a href="announcement.php" >
+      <i class="glyphicon glyphicon-tasks"></i>
+      <span>Annoucement</span>
     </a>
   </li>
   
@@ -56,4 +69,11 @@
        <li><a href="userfeedback.php"> User Feedback</a> </li>
        <li><a href="feedback_analytics.php">Feedback Analytics</a> </li>
    </ul>
+  </li>
+
+  <li>
+    <a href="user_announcement.php" >
+      <i class="glyphicon glyphicon-tasks"></i>
+      <span>Annoucements</span>
+    </a>
   </li>

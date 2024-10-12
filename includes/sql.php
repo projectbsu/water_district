@@ -431,6 +431,97 @@ function find_users_by_role($role_id) {
   return find_by_sql($sql);
 }
 
+function find_all_billing(){
+  global $db;
+  $sql = "SELECT * FROM Billing_list";
+  return find_by_sql($sql);
+}
 
+function find_billing_by_id($id){
+  global $db;
+  $id = (int)$id;
+  $sql = "SELECT * FROM Billing_list WHERE id='{$db->escape($id)}'";
+  return find_by_sql($sql);
+}
+
+function delete_billing_by_id($id){
+  global $db;
+  $sql = "DELETE FROM Billing_list WHERE id='{$db->escape($id)}'";
+  return ($db->query($sql)) ? true : false;
+}
+
+function update_billing($id, $data){
+  global $db;
+  $sql = "UPDATE Billing_list SET 
+          name='{$db->escape($data['name'])}', 
+          account_number='{$db->escape($data['account_number'])}',
+          reading_date='{$db->escape($data['reading_date'])}',
+          bill_number='{$db->escape($data['bill_number'])}',
+          meter_number='{$db->escape($data['meter_number'])}',
+          due_date='{$db->escape($data['due_date'])}',
+          present_reading='{$db->escape($data['present_reading'])}',
+          previous='{$db->escape($data['previous'])}',
+          total='{$db->escape($data['total'])}',
+          penalty='{$db->escape($data['penalty'])}',
+          total_after_due='{$db->escape($data['total_after_due'])}',
+          status='{$db->escape($data['status'])}',
+          paymentMethod='{$db->escape($data['paymentMethod'])}',
+          maintenance='{$db->escape($data['maintenance'])}',
+          date_updated=NOW()
+          WHERE id='{$db->escape($id)}'";
+  return ($db->query($sql)) ? true : false;
+}
+
+function add_announcement($title, $schedule, $context) {
+  global $db;
+  $sql = "INSERT INTO announcements (title, schedule, context) VALUES (?, ?, ?)";
+  $stmt = $db->prepare($sql);
+  $stmt->bind_param("sss", $title, $schedule, $context);
+  return $stmt->execute();
+}
+
+ 
+function find_latest_announcement() {
+  global $db;
+  $sql = "SELECT * FROM announcements ORDER BY schedule DESC LIMIT 1";
+  return $db->query($sql)->fetch_assoc();
+}
+
+function find_previous_announcements() {
+  global $db;
+
+  // Get the latest announcement ID
+  $latest_sql = "SELECT id FROM announcements ORDER BY schedule DESC LIMIT 1";
+  $latest_result = $db->query($latest_sql);
+
+  // Check if there are any announcements
+  if ($latest_result->num_rows > 0) {
+      $latest_announcement_id = $latest_result->fetch_assoc();
+      
+      // Fetch previous announcements excluding the latest one
+      $sql = "SELECT * FROM announcements WHERE id != {$latest_announcement_id['id']} ORDER BY schedule DESC LIMIT 0, 25";
+      return $db->query($sql)->fetch_all(MYSQLI_ASSOC);
+  } else {
+      return []; // No announcements available
+  }
+}
+
+function edit_announcement($id, $title, $schedule, $context) {
+  global $db;
+  $sql = "UPDATE announcements SET title = ?, schedule = ?, context = ? WHERE id = ?";
+  $stmt = $db->prepare($sql);
+  $stmt->bind_param("sssi", $title, $schedule, $context, $id);
+  return $stmt->execute();
+}
+
+
+
+function delete_announcement($id) {
+  global $db;
+  $sql = "DELETE FROM announcements WHERE id = ?";
+  $stmt = $db->prepare($sql);
+  $stmt->bind_param("i", $id);
+  return $stmt->execute();
+}
 
 ?>
