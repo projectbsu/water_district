@@ -3,7 +3,7 @@
   require_once('includes/load.php');
 
   // Check permission level
-  page_require_level(1);
+  page_require_level([1]);
 
   // Fetch all users from the database
   $all_users = find_all_user();

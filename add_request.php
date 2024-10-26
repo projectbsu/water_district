@@ -3,7 +3,7 @@ $page_title = 'Add Service Request';
 require_once('includes/load.php');
 
 // Check user level
-page_require_level(1);
+page_require_level([3]);
 
 // Fetch categories from the database
 $categories = find_all('categories');
@@ -76,14 +76,6 @@ if (isset($_POST['submit'])) {
                     <div class="form-group">
                         <label for="barangay">Barangay</label>
                         <input type="text" class="form-control" name="barangay" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select name="status" class="form-control" required>
-                            <option value="Pending">Pending</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Denied">Denied</option>
-                        </select>
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>

@@ -179,35 +179,36 @@ function find_by_groupLevel($level)
 /*--------------------------------------------------------------*/
 /* Function to check which user level has access to the page     */
 /*--------------------------------------------------------------*/
-function page_require_level($require_level)
-{
-    global $session;
+function page_require_level($require_levels) {
+  global $session;
 
-    $current_user = current_user();
+  $current_user = current_user();
 
-    // Check if the user is logged in
-    if (!$session->isUserLoggedIn(true)) {
-        $session->msg('d', 'Please login...');
-        redirect('index.php', false);
-    }
+  // Check if the user is logged in
+  if (!$session->isUserLoggedIn(true)) {
+      $session->msg('d', 'Please login...');
+      redirect('index.php', false);
+  }
 
-    // Retrieve the user's group level and status
-    $login_level = find_by_groupLevel($current_user['user_level']);
+  // Retrieve the user's group level and status
+  $login_level = find_by_groupLevel($current_user['user_level']);
 
-    // Check if the group level exists and the status is active
-    if (!$login_level || $login_level['group_status'] === '0') {
-        $session->msg('d', 'This level user has been banned!');
-        redirect('home.php', false);
-    }
+  // Check if the group level exists and the status is active
+  if (!$login_level || $login_level['group_status'] === '0') {
+      $session->msg('d', 'This level user has been banned!');
+      redirect('home.php', false);
+  }
 
-    // Check if the current user's level is sufficient
-    if ($current_user['user_level'] <= (int)$require_level) {
-        return true; // Access granted
-    } else {
-        $session->msg('d', 'Sorry! You don\'t have permission to view this page.');
-        redirect('home.php', false);
-    }
+  // Check if the current user's level is one of the required levels
+  if (in_array($current_user['user_level'], $require_levels)) {
+      return true; // Access granted
+  } else {
+      $session->msg('d', 'Sorry! You don\'t have permission to view this page.');
+      redirect('home.php', false);
+  }
 }
+
+
 
 // In includes/functions.php or a similar file
 function find_all_feedback() {

@@ -3,13 +3,21 @@ $page_title = 'Service Requests';
 require_once('includes/load.php');
 
 // Check user level
-page_require_level(1);
+page_require_level([1, 2]);
 
 // Fetch all service requests
 $status_filter = isset($_GET['status']) ? $_GET['status'] : 'all';
-$all_requests = find_all_service_requests($status_filter); // Modify your function to accept a status filter if needed
 
+// Modify your SQL query to filter based on the status
+if ($status_filter === 'all') {
+    $all_requests = find_by_sql("SELECT * FROM service_requests ORDER BY date_of_request DESC");
+} else {
+    // Sanitize the status filter to prevent SQL injection
+    $status_filter = $db->escape($status_filter);
+    $all_requests = find_by_sql("SELECT * FROM service_requests WHERE status = '{$status_filter}' ORDER BY date_of_request DESC");
+}
 ?>
+
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
     <div class="col-md-12">
@@ -61,7 +69,7 @@ $all_requests = find_all_service_requests($status_filter); // Modify your functi
                             <td class="text-center"><?php echo count_id(); ?></td>
                             <td><?php echo remove_junk(ucwords($request['name'])); ?></td>
                             <td><?php echo remove_junk($request['email']); ?></td>
-                            <td><?php echo remove_junk($request['account_number']); ?></td> <!-- Displaying Account Number -->
+                            <td><?php echo remove_junk($request['account_number']); ?></td>
                             <td><?php echo remove_junk($request['contact']); ?></td>
                             <td><?php echo remove_junk($request['gender']); ?></td>
                             <td><?php echo remove_junk($request['barangay']); ?></td>
@@ -74,7 +82,7 @@ $all_requests = find_all_service_requests($status_filter); // Modify your functi
                             <td><?php echo remove_junk($request['date_of_request']); ?></td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="edit_request.php?id=<?php echo (int)$request['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
+                                    <a href="archived_service_requests.php?id=<?php echo (int)$request['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                     <a href="delete_request.php?id=<?php echo (int)$request['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
@@ -85,7 +93,7 @@ $all_requests = find_all_service_requests($status_filter); // Modify your functi
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
-
+                </table>
             </div>
         </div>
     </div>

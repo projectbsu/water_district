@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Billing List';
 require_once('includes/load.php');
-page_require_level(1); // Admin-level access
+page_require_level([1, 2]); // Admin-level access
 
 // Query to retrieve all billing records
 $all_bills = find_all('Billing_list');

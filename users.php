@@ -3,7 +3,7 @@ $page_title = 'All Users';
 require_once('includes/load.php');
 
 // Check what level user has permission to view this page
-page_require_level(1);
+page_require_level([1]);
 
 // Pull out all users from the database
 $all_users = find_all_user();

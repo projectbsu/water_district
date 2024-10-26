@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Add Billing Notice';
 require_once('includes/load.php');
-page_require_level(1); // Admin-level access
+page_require_level([1, 2]); // Admin-level access
 
 // Correct form submission check
 if (isset($_POST['add_billing'])) {

@@ -10,10 +10,10 @@
 Username: admin
 Password: admin
 
-**Special User Login Details**
+**Staff User Login Details**
 
-Username: special
-Password: special
+Username: staff
+Password: staff
 
 **User(Employee) Login Details**
 

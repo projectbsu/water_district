@@ -2,7 +2,7 @@
 $page_title = 'Announcements';
 require_once('includes/load.php');
 // Check user permission
-page_require_level(1);
+page_require_level([3]);
 
 $latest_announcement = find_latest_announcement(); // Function to fetch the latest announcement
 $previous_announcements = find_previous_announcements(); // Function to fetch previous announcements

@@ -3,7 +3,7 @@ $page_title = 'Customer Management';
 require_once('includes/load.php');
 
 // Check what level user has permission to view this page
-page_require_level(1);
+page_require_level([2]);
 
 // Fetch all customers from the database
 // Assuming the '3' is the group ID for "Customer", modify this based on your actual database structure

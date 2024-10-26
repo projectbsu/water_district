@@ -1,7 +1,7 @@
 <?php
 require_once('includes/load.php');
 // Check user permission
-page_require_level(1);
+page_require_level([1, 2]);
 
 if (isset($_GET['id'])) {
     $announcement_id = (int)$_GET['id'];

@@ -3,7 +3,7 @@ $page_title = 'Edit Billing';
 require_once('includes/load.php');
 
 // Check if the user has permission to view this page (Admin-level access)
-page_require_level(1);
+page_require_level([1, 2]);
 
 // Get the billing record by ID with the corresponding barangay
 $bill_id = (int)$_GET['id'];

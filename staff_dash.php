@@ -4,7 +4,7 @@ $page_title = 'Customer Dashboard';
 require_once('includes/load.php');
 
 // Check permission level for staff
-page_require_level(2); // Assuming level 2 is for Staff
+page_require_level([2]); // Assuming level 2 is for Staff
 
 // Fetch all customers from the database
 $total_customers = count_all_customers();

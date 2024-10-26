@@ -2,7 +2,7 @@
 require_once('includes/load.php');
 
 // Check user permission
-page_require_level(1);
+page_require_level([1]);
 
 // Enable error reporting for debugging
 error_reporting(E_ALL);

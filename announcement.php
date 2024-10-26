@@ -2,7 +2,7 @@
 $page_title = 'Manage Announcements';
 require_once('includes/load.php');
 // Check user permission
-page_require_level(1);
+page_require_level([1, 2]);
 
 $all_announcements = find_all('announcements');
 

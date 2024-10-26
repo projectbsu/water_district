@@ -3,7 +3,7 @@ $page_title = 'Transactions';
 require_once('includes/load.php');
 
 // Check user level
-page_require_level(1);
+page_require_level([1, 2]);
 
 // Fetch all transactions from the database
 $query = "SELECT * FROM transactions ORDER BY transaction_time DESC";
