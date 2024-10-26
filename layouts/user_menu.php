@@ -19,7 +19,6 @@
       <span>Biling</span>
     </a>
     <ul class="nav submenu">
-      <li><a href="billing_notice.php">Billing Form</a> </li>
        <li><a href="billing.php">Billing Notice</a> </li>
    </ul>
   </li>

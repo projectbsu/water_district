@@ -1,8 +1,3 @@
-**Database Name: water_district**
-
-**Developed by Siamon Hasan**
-
-**Recommended PHP Version 5.6.3**
 
 
 **Admin Login Details**
@@ -15,7 +10,7 @@ Password: admin
 Username: staff
 Password: staff
 
-**User(Employee) Login Details**
+**Customer Login Details**
 
-Username: user
-Password: user 
+Username: ellie
+Password: 123456789
