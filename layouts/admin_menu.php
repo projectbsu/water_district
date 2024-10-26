@@ -57,7 +57,6 @@
       <span>Feedback</span>
     </a>
     <ul class="nav submenu">
-       <li><a href="feedback.php">Feedvcak</a></li>
        <li><a href="userfeedback.php"> User Feedback</a> </li>
        <li><a href="feedback_analytics.php">Feedback Analytics</a> </li>
    </ul>
