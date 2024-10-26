@@ -41,6 +41,7 @@
     <ul class="nav submenu">
       <li><a href="billing_notice.php">Billing Form</a> </li>
        <li><a href="billing_list.php">Billing List</a> </li>
+       <li><a href="billing.php">Billing</a> </li>
        <li><a href="service_requests.php">Billing Report</a> </li>
    </ul>
   </li>
@@ -54,7 +55,7 @@
 
   <li>
     <a href="announcement.php" >
-      <i class="glyphicon glyphicon-tasks"></i>
+      <i class="glyphicon glyphicon-bullhorn"></i>
       <span>Annoucement</span>
     </a>
   </li>
@@ -73,7 +74,7 @@
 
   <li>
     <a href="user_announcement.php" >
-      <i class="glyphicon glyphicon-tasks"></i>
+      <i class="glyphicon glyphicon-bullhorn"></i>
       <span>Annoucements</span>
     </a>
   </li>

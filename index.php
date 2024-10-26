@@ -8,7 +8,7 @@
       <div class="text-center">
         <h1>Login Panel</h1>
         <h4>Mabini Water District System</h4>
-        <img src="uploads/photo/logo.png" alt="Mabini Water District System Logo" width="65" height="65">
+        <img src="uploads/photo/Untitled93_20241016102942.png" alt="Mabini Water District System Logo" width="65" height="65">
       </div>
      <?php echo display_msg($msg); ?>
       <form method="post" action="auth.php" class="clearfix">

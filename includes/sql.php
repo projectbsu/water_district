@@ -159,41 +159,56 @@ function tableExists($table){
     $result = $db->query($sql);
     return($db->num_rows($result) === 0 ? true : false);
   }
-  /*--------------------------------------------------------------*/
-  /* Find group level
-  /*--------------------------------------------------------------*/
-  function find_by_groupLevel($level)
-  {
+  //*--------------------------------------------------------------*/
+/* Find group level and status                                   */
+/*--------------------------------------------------------------*/
+function find_by_groupLevel($level)
+{
     global $db;
-    $sql = "SELECT group_level FROM user_groups WHERE group_level = '{$db->escape($level)}' LIMIT 1 ";
+    $sql = "SELECT group_level, group_status FROM user_groups WHERE group_level = '{$db->escape($level)}' LIMIT 1";
     $result = $db->query($sql);
-    return($db->num_rows($result) === 0 ? true : false);
-  }
-  /*--------------------------------------------------------------*/
-  /* Function for cheaking which user level has access to page
-  /*--------------------------------------------------------------*/
-   function page_require_level($require_level){
-     global $session;
-     $current_user = current_user();
-     $login_level = find_by_groupLevel($current_user['user_level']);
-     //if user not login
-     if (!$session->isUserLoggedIn(true)):
-            $session->msg('d','Please login...');
-            redirect('index.php', false);
-      //if Group status Deactive
-     elseif($login_level['group_status'] === '0'):
-           $session->msg('d','This level user has been band!');
-           redirect('home.php',false);
-      //cheackin log in User level and Require level is Less than or equal to
-     elseif($current_user['user_level'] <= (int)$require_level):
-              return true;
-      else:
-            $session->msg("d", "Sorry! you dont have permission to view the page.");
-            redirect('home.php', false);
-        endif;
 
-     }
- 
+    // Ensure the query was successful and data exists
+    if ($db->num_rows($result) > 0) {
+        return $db->fetch_assoc($result); // Return the result as an associative array
+    } else {
+        return false; // Group level not found
+    }
+}
+
+/*--------------------------------------------------------------*/
+/* Function to check which user level has access to the page     */
+/*--------------------------------------------------------------*/
+function page_require_level($require_level)
+{
+    global $session;
+
+    $current_user = current_user();
+
+    // Check if the user is logged in
+    if (!$session->isUserLoggedIn(true)) {
+        $session->msg('d', 'Please login...');
+        redirect('index.php', false);
+    }
+
+    // Retrieve the user's group level and status
+    $login_level = find_by_groupLevel($current_user['user_level']);
+
+    // Check if the group level exists and the status is active
+    if (!$login_level || $login_level['group_status'] === '0') {
+        $session->msg('d', 'This level user has been banned!');
+        redirect('home.php', false);
+    }
+
+    // Check if the current user's level is sufficient
+    if ($current_user['user_level'] <= (int)$require_level) {
+        return true; // Access granted
+    } else {
+        $session->msg('d', 'Sorry! You don\'t have permission to view this page.');
+        redirect('home.php', false);
+    }
+}
+
 // In includes/functions.php or a similar file
 function find_all_feedback() {
   global $db;

@@ -37,6 +37,7 @@ include_once('layouts/header.php');
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>ID</th> <!-- New column for ID -->
                             <th>Customer Name</th>
                             <th>Rating</th>
                             <th>Feedback</th>
@@ -59,6 +60,7 @@ include_once('layouts/header.php');
                 <tbody>
                     <?php foreach ($all_feedback as $feedback): ?>
                     <tr>
+                        <td><?php echo remove_junk((int)$feedback['id']); ?></td> <!-- Display ID -->
                         <td><?php echo remove_junk(ucwords($feedback['user_name'])); ?></td>
                         <td>
                             <?php
@@ -72,13 +74,12 @@ include_once('layouts/header.php');
                         <td><?php echo read_date($feedback['created_at']); ?></td>
                         <td>
                             <div class="btn-group">
-                            <a href="archive_feedback.php?id=<?php echo (int)$feedback['id']; ?>" class="btn btn-warning btn-xs">Archive</a>
+                                <a href="archive_feedback.php?id=<?php echo (int)$feedback['id']; ?>" class="btn btn-warning btn-xs">Archive</a>
                             </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>
-
-
+                </tbody>
                 </table>
             </div>
         </div>

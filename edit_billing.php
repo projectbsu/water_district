@@ -5,9 +5,10 @@ require_once('includes/load.php');
 // Check if the user has permission to view this page (Admin-level access)
 page_require_level(1);
 
-// Get the billing record by ID
+// Get the billing record by ID with the corresponding barangay
 $bill_id = (int)$_GET['id'];
-$billing = find_by_id('Billing_list', $bill_id);
+$query = "SELECT b.*, u.barangay FROM Billing_list b LEFT JOIN users u ON b.account_number = u.account_number WHERE b.id = '{$bill_id}'";
+$billing = $db->query($query)->fetch_assoc();
 
 if (!$billing) {
     $session->msg("d", "Missing billing ID.");
@@ -118,7 +119,6 @@ if (isset($_POST['update_billing'])) {
                             <option value="1" <?php if($billing['status'] == 1) echo 'selected'; ?>>Paid</option>
                             <option value="2" <?php if($billing['status'] == 2) echo 'selected'; ?>>Overdue</option>
                         </select>
-
                     </div>
                     <div class="form-group">
                         <label for="paymentMethod">Payment Method</label>
@@ -135,65 +135,68 @@ if (isset($_POST['update_billing'])) {
     </div>
 
     <div class="row">
-    <!-- Display Billing Receipt -->
-    <div class="col-md-6">
-        <div id="receipt" style="max-width: 500px; margin: 0 auto; border: 2px solid #666; padding: 20px; font-family: Arial, sans-serif; font-size: 12px; border-radius: 5px;">
-            <div class="header" style="text-align: center;">
-                <img src="uploads/photo/logo.png" alt="Logo" style="width: 80px;">
-                <h3 style="margin: 10px 0;">MABINI WATER DISTRICT</h3>
-                <p style="margin: 5px 0;">Mabini, Batangas</p>
-                <p style="margin: 5px 0;">NON-VAT Registered</p>
+        <!-- Display Billing Receipt -->
+        <div class="col-md-6">
+            <div id="receipt" style="max-width: 500px; margin: 0 auto; border: 2px solid #666; padding: 20px; font-family: Arial, sans-serif; font-size: 12px; border-radius: 5px;">
+                <div class="header" style="text-align: center;">
+                    <img src="uploads/photo/logo.png" alt="Logo" style="width: 80px;">
+                    <h3 style="margin: 10px 0;">MABINI WATER DISTRICT</h3>
+                    <p style="margin: 5px 0;">Mabini, Batangas</p>
+                    <p style="margin: 5px 0;">NON-VAT Registered</p>
+                </div>
+
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <tr>
+                        <td style="border: 1px solid #aaa; padding: 8px;"><strong>Account No:</strong> <?php echo remove_junk($billing['account_number']); ?></td>
+                        <td style="border: 1px solid #aaa; padding: 8px; text-align: right;"><strong>Bill No:</strong> <?php echo remove_junk($billing['bill_number']); ?></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #aaa; padding: 8px;"><strong>Name:</strong> <?php echo remove_junk($billing['name']); ?></td>
+                        <td style="border: 1px solid #aaa; padding: 8px; text-align: right;"><strong>Meter No:</strong> <?php echo remove_junk($billing['meter_number']); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border: 1px solid #aaa; padding: 8px;">
+                            <strong>Address:</strong> <?php echo remove_junk($billing['barangay']) . ', Mabini, Batangas'; ?>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <tr>
+                        <th style="border: 1px solid #666; padding: 8px; text-align: left;">PERIOD COVERED</th>
+                        <th style="border: 1px solid #666; padding: 8px; text-align: left;">METER READING</th>
+                        <th style="border: 1px solid #666; padding: 8px; text-align: left;">CONSUMED</th>
+                        <th style="border: 1px solid #666; padding: 8px; text-align: right;">AMOUNT</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #aaa; padding: 8px;"><?php echo date('m/d/y', strtotime($billing['reading_date'])); ?> to <?php echo date('m/d/y', strtotime($billing['due_date'])); ?></td>
+                        <td style="border: 1px solid #aaa; padding: 8px;"><?php echo $billing['present_reading']; ?> (Present) <br> <?php echo $billing['previous']; ?> (Previous)</td>
+                        <td style="border: 1px solid #aaa; padding: 8px;"><?php echo $billing['present_reading'] - $billing['previous']; ?></td>
+                        <td style="border: 1px solid #aaa; padding: 8px; text-align: right;">₱<?php echo number_format($billing['total'], 2); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="border: 1px solid #aaa; padding: 8px; text-align: left;"><strong>Meter Maintenance Fee/ACA/FR. Tax</strong></td>
+                        <td style="border: 1px solid #aaa; padding: 8px; text-align: right;">₱<?php echo number_format($billing['maintenance'], 2); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="border: 1px solid #aaa; padding: 8px; text-align: left;"><strong>Total Amount Due</strong></td>
+                        <td style="border: 1px solid #aaa; padding: 8px; text-align: right;">₱<?php echo number_format($billing['total'], 2); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="border: 1px solid #aaa; padding: 8px; text-align: left;"><strong>Penalty after Due Date (10%)</strong></td>
+                        <td style="border: 1px solid #aaa; padding: 8px; text-align: right;">₱<?php echo number_format($billing['penalty'], 2); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="border: 1px solid #aaa; padding: 8px; text-align: left;"><strong>Amount Due After Due Date</strong></td>
+                        <td style="border: 1px solid #aaa; padding: 8px; text-align: right;">₱<?php echo number_format($billing['total_after_due'], 2); ?></td>
+                    </tr>
+                </table>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <p>Signature of Collector / Date: _________________________</p>
+                </div>
             </div>
 
-            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                <tr>
-                    <td style="border: 1px solid #aaa; padding: 8px;"><strong>Account No:</strong> <?php echo remove_junk($billing['account_number']); ?></td>
-                    <td style="border: 1px solid #aaa; padding: 8px; text-align: right;"><strong>Bill No:</strong> <?php echo remove_junk($billing['bill_number']); ?></td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #aaa; padding: 8px;"><strong>Name:</strong> <?php echo remove_junk($billing['name']); ?></td>
-                    <td style="border: 1px solid #aaa; padding: 8px; text-align: right;"><strong>Meter No:</strong> <?php echo remove_junk($billing['meter_number']); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="border: 1px solid #aaa; padding: 8px;"><strong>Address:</strong> ANILAO EAST, MABINI, BATANGAS</td>
-                </tr>
-            </table>
-
-            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-                <tr>
-                    <th style="border: 2px solid #666; padding: 8px;">PERIOD COVERED</th>
-                    <th style="border: 2px solid #666; padding: 8px;">METER READING</th>
-                    <th style="border: 2px solid #666; padding: 8px;">CONSUMED</th>
-                    <th style="border: 2px solid #666; padding: 8px;">AMOUNT</th>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #aaa; padding: 8px;"><?php echo date('m/d/y', strtotime($billing['reading_date'])); ?> to <?php echo date('m/d/y', strtotime($billing['due_date'])); ?></td>
-                    <td style="border: 1px solid #aaa; padding: 8px;"><?php echo $billing['present_reading']; ?> (Present) <br> <?php echo $billing['previous']; ?> (Previous)</td>
-                    <td style="border: 1px solid #aaa; padding: 8px;"><?php echo $billing['present_reading'] - $billing['previous']; ?></td>
-                    <td style="border: 1px solid #aaa; padding: 8px;">₱<?php echo number_format($billing['total'], 2); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="border: 1px solid #aaa; padding: 8px;"><strong>Meter Maintenance Fee/ACA/FR. Tax</strong></td>
-                    <td style="border: 1px #aaa; padding: 8px;">₱<?php echo number_format($billing['maintenance'], 2); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="border: 1px solid #aaa; padding: 8px;"><strong>Total Amount Due</strong></td>
-                    <td style="border: 1px solid #aaa; padding: 8px;">₱<?php echo number_format($billing['total'], 2); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="border: 1px solid #aaa; padding: 8px;"><strong>Penalty after Due Date (10%)</strong></td>
-                    <td style="border: 1px solid #aaa; padding: 8px;">₱<?php echo number_format($billing['penalty'], 2); ?></td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="border: 1px solid #aaa; padding: 8px;"><strong>Amount Due After Due Date</strong></td>
-                    <td style="border: 1px solid #aaa; padding: 8px;">₱<?php echo number_format($billing['total_after_due'], 2); ?></td>
-                </tr>
-            </table>
-
-            <div style="margin-top: 20px; text-align: center;">
-                <p>Signature of Collector / Date: _________________________</p>
-            </div>
-        </div>
 
         <!-- Print and Send buttons -->
         <div style="text-align: center; margin-top: 20px;">

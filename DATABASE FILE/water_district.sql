@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2024 at 06:27 AM
+-- Generation Time: Oct 26, 2024 at 02:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -24,6 +24,101 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `announcements`
+--
+
+CREATE TABLE `announcements` (
+  `id` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `schedule` date NOT NULL,
+  `context` longtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `announcements`
+--
+
+INSERT INTO `announcements` (`id`, `title`, `schedule`, `context`) VALUES
+(1, 'Water Interuption', '2024-10-18', 'Mawawalan ng tubig'),
+(2, 'Water Interuption', '2024-10-24', 'yawa'),
+(4, 'Water Interuption', '2024-10-17', 'Mawawalan po ng tubig mag ipon nakayo.'),
+(5, 'Water Interuption', '2024-10-31', 'JBGWGERH');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `archived_feedback`
+--
+
+CREATE TABLE `archived_feedback` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `feedback_text` text NOT NULL,
+  `reaction` varchar(20) NOT NULL,
+  `sentiment_score` float NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `archived_feedback`
+--
+
+INSERT INTO `archived_feedback` (`id`, `user_id`, `feedback_text`, `reaction`, `sentiment_score`, `created_at`) VALUES
+(8, 1, 'Excellent customer service every time.', 'Very Happy', 1, '2024-10-09 14:11:13'),
+(12, 1, 'Water pressure problems in my area.', 'Sad', 0.5, '2024-10-10 10:04:24'),
+(13, 1, 'Frequent water service disruptions.', 'Angry', -1, '2024-10-11 12:12:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `billing_list`
+--
+
+CREATE TABLE `billing_list` (
+  `id` int(30) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `account_number` varchar(255) NOT NULL,
+  `reading_date` date NOT NULL,
+  `bill_number` varchar(255) NOT NULL,
+  `meter_number` varchar(255) NOT NULL,
+  `due_date` date NOT NULL,
+  `present_reading` float(12,2) NOT NULL,
+  `previous` float(12,2) NOT NULL,
+  `total` float(12,2) NOT NULL,
+  `penalty` float(12,2) DEFAULT 0.00,
+  `total_after_due` float(12,2) NOT NULL,
+  `status` tinyint(1) DEFAULT 0,
+  `paymentMethod` varchar(64) NOT NULL,
+  `maintenance` float(12,2) NOT NULL,
+  `date_created` datetime DEFAULT current_timestamp(),
+  `date_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `billing_list`
+--
+
+INSERT INTO `billing_list` (`id`, `name`, `account_number`, `reading_date`, `bill_number`, `meter_number`, `due_date`, `present_reading`, `previous`, `total`, `penalty`, `total_after_due`, `status`, `paymentMethod`, `maintenance`, `date_created`, `date_updated`) VALUES
+(1, 'Angelo Santos', '186286e', '2024-11-02', '172', '12', '2024-10-30', 1223.00, 123.00, 1223.00, 12.00, 12.00, 2, '12', -0.01, '2024-10-11 14:28:26', '2024-10-12 09:32:29'),
+(2, 'Angelo Santos', '186286e', '2024-10-17', '172', '12', '2024-10-29', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-11 14:39:01', NULL),
+(3, 'Angelo Santos', '186286e', '2024-10-04', '172', '12', '2024-10-24', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-11 14:39:23', NULL),
+(4, 'yawa', '186286e', '2024-09-29', '172', '12', '2024-10-16', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-11 14:41:31', '2024-10-12 08:28:35'),
+(5, 'Emo Santos', '186286e', '2024-10-25', '172', '12', '2024-10-16', 1223.00, 123.00, 1223.00, 12.00, 12.00, 0, '12', -0.01, '2024-10-11 14:51:12', NULL),
+(6, 'Emo Santos', '186286e', '2024-10-31', '172', '12', '2024-10-22', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-11 14:52:33', NULL),
+(7, 'Emo Santos', '186286e', '2024-11-07', '172', '12', '2024-10-31', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-11 14:53:07', NULL),
+(8, 'Emo Santos', '186286e', '2024-10-18', '172', '12', '2024-10-23', 1223.00, 123.00, 1223.00, 12.00, 12.00, 2, '12', -0.01, '2024-10-12 07:55:23', '2024-10-12 09:16:56'),
+(9, 'Emo Santos', '186286e', '2024-11-01', '172', '12', '2024-10-29', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-12 07:55:36', NULL),
+(10, 'Emo Santos', '186286e', '2024-10-31', '172', '12', '2024-10-23', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-12 07:55:52', NULL),
+(11, 'Emo Santos', '186286e', '2024-11-05', '172', '12', '2024-10-21', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-12 07:56:05', NULL),
+(12, 'Emo Santos', '186286e', '2024-11-01', '172', '12', '2024-10-03', 1223.00, 123.00, 1223.00, 12.00, 12.00, 1, '12', -0.01, '2024-10-12 07:58:03', NULL),
+(13, 'gagi', '186286e', '2024-10-28', '172', '12', '2024-10-14', 1223.00, 123.00, 1223.00, 12.00, 12.00, 2, '12', -0.01, '2024-10-12 09:23:18', NULL),
+(14, 'Ellie Joy Dimaculangan', '186286e4', '2024-10-25', '172', '12', '2024-10-31', 1223.00, 123.00, 1223.00, 12.00, 12.00, 0, '12', -0.01, '2024-10-12 10:57:43', NULL),
+(15, 'Ellie Joy Dimaculangan', '186286e4', '2024-10-26', '172', '12', '2024-11-02', 1223.00, 123.00, 1223.00, 12.00, 12.00, 0, '12', -0.01, '2024-10-12 11:12:42', NULL),
+(16, 'Gelloo', '6384736', '2024-11-02', '172', '12', '2024-11-01', 1223.00, 123.00, 1223.00, 12.00, 12.00, 0, '12', -0.01, '2024-10-12 11:25:23', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -39,7 +134,15 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `category_details`, `created_at`) VALUES
-(1, 'Gelo', 'rgg', '2024-09-27 00:05:30');
+(2, 'New Connection', 'A service for installing a fresh utility connection to a property.\r\n', '2024-10-10 00:51:52'),
+(3, 'Reconnection', 'Restoring a previously disconnected service due to non-payment or request.\r\n', '2024-10-10 00:52:44'),
+(4, 'Disconnection', 'The termination of a utility service, either temporarily or permanently, upon request or non-compliance.\r\n', '2024-10-10 00:53:18'),
+(5, 'Relocation', 'Moving existing service infrastructure to a new location within the same property or premises.\r\n', '2024-10-10 00:53:41'),
+(6, 'Change Meter', 'Replacing an old or malfunctioning meter with a new one for accurate readings.\r\n', '2024-10-10 00:54:17'),
+(7, 'Service Line Minor Repair', 'Small-scale repairs on the customer’s service line, addressing minor leaks or damages.\r\n', '2024-10-10 00:55:09'),
+(8, 'Service Line Major Repair', 'Extensive repairs required for severe damage or faults on the customer’s service line.', '2024-10-10 00:55:32'),
+(9, 'Mainline Minor Repair', 'Minor repairs on the main utility line, usually involving small leaks or wear-and-tear fixes.\r\n', '2024-10-10 00:56:04'),
+(10, 'Mainline Major Repair', 'Major repairs addressing significant damage to the main utility line, which could impact multiple users.\r\n', '2024-10-10 00:56:25');
 
 -- --------------------------------------------------------
 
@@ -53,21 +156,33 @@ CREATE TABLE `feedback` (
   `user_name` varchar(255) DEFAULT NULL,
   `reaction` enum('Angry','Sad','Neutral','Happy','Very Happy') NOT NULL,
   `feedback_text` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `sentiment_score` decimal(2,1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `feedback`
 --
 
-INSERT INTO `feedback` (`id`, `user_id`, `user_name`, `reaction`, `feedback_text`, `created_at`) VALUES
-(23, 1, 'Harry Denn', 'Sad', 'kriirir', '2024-09-30 05:16:59'),
-(24, 3, 'Christopher', 'Sad', 'im sad', '2024-09-30 05:21:57'),
-(25, 3, 'Christopher', 'Angry', 'im angry', '2024-09-30 05:23:48'),
-(26, 3, 'Christopher', 'Sad', 'im sad', '2024-09-30 05:23:55'),
-(27, 3, 'Christopher', 'Neutral', 'i dont feel nothing', '2024-09-30 05:24:06'),
-(29, 3, 'Christopher', 'Very Happy', 'im very happy', '2024-09-30 05:24:25'),
-(33, 3, 'Christopher', 'Happy', 'im happy', '2024-10-03 04:02:11');
+INSERT INTO `feedback` (`id`, `user_id`, `user_name`, `reaction`, `feedback_text`, `created_at`, `sentiment_score`) VALUES
+(58, 1, 'Harry Denn', 'Happy', 'Positive experience with community outreach efforts.', '2024-10-09 03:05:26', 1.0),
+(59, 1, 'Harry Denn', 'Angry', 'Consistent issues with water quality.', '2024-10-09 03:10:37', -1.0),
+(60, 1, 'Harry Denn', 'Sad', 'Water pressure problems in my area.', '2024-10-09 03:10:42', -0.5),
+(61, 1, 'Harry Denn', 'Neutral', 'Standard billing process with no surprises.', '2024-10-09 03:10:46', 0.0),
+(62, 1, 'Harry Denn', 'Happy', 'Positive experience with community outreach efforts.', '2024-10-09 03:10:51', 0.5),
+(63, 1, 'Harry Denn', 'Very Happy', 'Fair pricing and transparent billing practices.', '2024-10-09 03:10:56', 1.0),
+(64, 1, 'Harry Denn', 'Happy', 'Positive experience with community outreach efforts.', '2024-10-09 03:18:59', 0.5),
+(71, 1, 'Harry Denn', 'Neutral', 'Service is adequate but not exceptional.', '2024-10-09 03:47:40', 0.0),
+(72, 1, 'Harry Denn', 'Sad', 'High rates compared to neighboring districts.', '2024-10-09 05:54:43', -0.5),
+(73, 1, 'Harry Denn', 'Very Happy', 'Proactive communication about projects and updates.', '2024-10-09 06:09:43', 1.0),
+(78, 6, 'Gelo Santos', 'Very Happy', 'Fair pricing and transparent billing practices.', '2024-10-10 02:23:48', 1.0),
+(80, 1, 'Harry Denn', 'Very Happy', 'Great programs for water conservation and education.', '2024-10-11 04:34:00', 1.0),
+(81, 1, 'Harry Denn', 'Sad', 'High rates compared to neighboring districts.', '2024-10-11 05:02:56', -0.5),
+(82, 1, 'Harry Denn', 'Sad', 'High rates compared to neighboring districts.', '2024-10-11 05:08:41', -0.5),
+(83, 1, 'Harry Denn', 'Angry', 'Consistent issues with water quality.', '2024-10-12 05:39:04', -1.0),
+(84, 1, 'Harry Denn', 'Neutral', 'Service is adequate but not exceptional.', '2024-10-16 06:16:50', 0.0),
+(85, 1, 'Harry Denn', 'Neutral', 'Service is adequate but not exceptional.', '2024-10-16 06:21:08', 0.0),
+(86, 1, 'Harry Denn', 'Neutral', 'Service is adequate but not exceptional.', '2024-10-16 06:22:32', 0.0);
 
 -- --------------------------------------------------------
 
@@ -84,27 +199,19 @@ CREATE TABLE `service_requests` (
   `gender` varchar(10) NOT NULL,
   `barangay` varchar(100) NOT NULL,
   `status` varchar(20) NOT NULL,
-  `date_of_request` datetime DEFAULT current_timestamp()
+  `date_of_request` datetime DEFAULT current_timestamp(),
+  `account_number` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `service_requests`
 --
 
-INSERT INTO `service_requests` (`id`, `customer_user_id`, `name`, `email`, `contact`, `gender`, `barangay`, `status`, `date_of_request`) VALUES
-(3, 6, 'IHRGNKG', 'angelosantospamplona@gmail.com', 'NITH', 'Male', 'Anilao East', 'Pending', '2024-09-27 12:45:26'),
-(4, 6, 'IHRGNKG', 'angelosantospamplona@gmail.com', 'NITH', 'Male', 'Anilao East', 'Pending', '2024-09-27 12:59:47'),
-(5, 6, 'IHRGNKG', 'angelosantospamplona@gmail.com', 'NITH', 'Male', 'Anilao East', 'Pending', '2024-09-27 13:05:30'),
-(6, 6, 'IHRGNKG', 'angelosantospamplona@gmail.com', 'NITH', 'Male', 'Anilao East', 'Pending', '2024-09-27 13:07:06'),
-(7, 6, 'Angelo Santos', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-27 13:10:44'),
-(8, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-30 10:59:45'),
-(9, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-30 12:34:34'),
-(10, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-30 12:36:08'),
-(11, 1, 'Gelo Santos', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-30 12:40:10'),
-(12, 1, 'jana', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-30 12:44:18'),
-(13, 1, 'jana', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-30 12:47:11'),
-(14, 1, 'jana', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-30 12:47:35'),
-(15, 1, 'jana', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 'Pending', '2024-09-30 13:02:15');
+INSERT INTO `service_requests` (`id`, `customer_user_id`, `name`, `email`, `contact`, `gender`, `barangay`, `status`, `date_of_request`, `account_number`) VALUES
+(30, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', 'nmnas1114', 'Male', 'Anilao Proper', 'Pending', '2024-10-09 13:35:06', '09108615337'),
+(31, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao Proper', 'Pending', '2024-10-09 13:55:09', 'nmnas1114'),
+(32, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', 'nmnas1114', 'Male', 'Anilao Proper', 'Pending', '2024-10-09 13:56:03', '09108615337'),
+(33, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', 'nmnas1114', 'Male', 'Anilao Proper', 'Pending', '2024-10-09 13:56:08', '09108615337');
 
 -- --------------------------------------------------------
 
@@ -114,27 +221,11 @@ INSERT INTO `service_requests` (`id`, `customer_user_id`, `name`, `email`, `cont
 
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL,
-  `customer_user_id` int(10) UNSIGNED NOT NULL,
-  `transaction_detail` varchar(255) NOT NULL,
-  `transaction_time` datetime DEFAULT current_timestamp(),
-  `customer_name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`id`, `customer_user_id`, `transaction_detail`, `transaction_time`, `customer_name`) VALUES
-(1, 6, 'New service request added for IHRGNKG.', '2024-09-27 07:05:30', NULL),
-(2, 6, 'New service request added for IHRGNKG.', '2024-09-27 07:07:06', NULL),
-(3, 6, 'New service request added for Angelo Santos.', '2024-09-27 07:10:44', NULL),
-(4, 1, 'New service request added for Angelo Santos.', '2024-09-30 04:59:45', NULL),
-(5, 1, 'New service request added for Angelo Santos.', '2024-09-30 06:36:08', NULL),
-(6, 1, 'New service request added for Gelo Santos.', '2024-09-30 06:40:10', NULL),
-(7, 1, 'New service request added for jana.', '2024-09-30 06:44:18', NULL),
-(8, 1, 'New service request added for jana.', '2024-09-30 06:47:11', NULL),
-(9, 1, 'New service request added for jana.', '2024-09-30 06:47:35', NULL),
-(17, 1, 'jana send a service request.', '2024-09-30 07:02:15', NULL);
+  `user_name` varchar(255) NOT NULL,
+  `account_number` varchar(50) NOT NULL,
+  `transaction_detail` text NOT NULL,
+  `transaction_time` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -154,21 +245,23 @@ CREATE TABLE `users` (
   `contact` varchar(15) NOT NULL,
   `sex` enum('Male','Female') NOT NULL,
   `barangay` varchar(255) NOT NULL,
-  `age` int(3) NOT NULL
+  `age` int(3) NOT NULL,
+  `account_number` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `email`, `contact`, `sex`, `barangay`, `age`) VALUES
-(1, 'Harry Denn', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.png', 1, 'harrydean34@gmail.com', '092636747377', 'Male', 'Pulong Anahao', 32),
-(2, 'John Walker', 'John', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, 'john@gmail.com', '09108615337', 'Male', 'Pulong Anahao', 25),
-(3, 'Christopher Martinez', 'Christopher', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, 'christophermartinez11@gmail.com', '092664773272', 'Male', 'Pilahan', 40),
-(4, 'Natie Williams', 'Natie', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, 'natiewilliams12@gmail.com', '091234556', 'Female', 'Barangay 1', 30),
-(5, 'Kevin', 'Kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 0, 'kevin0992@gmail.com', '09367624422', 'Male', 'San Francisco', 32),
-(6, 'Gelo Santos', 'Angelo', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 1, 'dqw8itwc6.png', 1, 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Pulong Balibaguhan', 19),
-(7, 'Angelo Santos', 'Angelo', '41f6b14341c6a4c029ce75c50665244233cbc5c7', 1, 'no_image.jpg', 1, 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao East', 20);
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `email`, `contact`, `sex`, `barangay`, `age`, `account_number`) VALUES
+(1, 'Harry Denn', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.png', 1, 'harrydean34@gmail.com', '092636747377', 'Male', 'Pulong Anahao', 32, '98585'),
+(2, 'John Walker', 'John', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, 'john@gmail.com', '09108615337', 'Male', 'Pulong Anahao', 25, 'yyyjyfu'),
+(3, 'Christopher Martinez', 'Christopher', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, 'christophermartinez11@gmail.com', '092664773272', 'Male', 'Pilahan', 40, '7437634'),
+(4, 'Natie Williams', 'Natie', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, 'natiewilliams12@gmail.com', '091234556', 'Female', 'Anilao Proper', 30, '18628655'),
+(5, 'Kevin', 'Kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 0, 'kevin0992@gmail.com', '0936762', 'Male', 'San Francisco', 32, '48uhgdfv'),
+(6, 'Gelo Santos', 'Angelo', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 1, 'dqw8itwc6.png', 1, 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Pulong Balibaguhan', 19, '6384736'),
+(7, 'Angelo Santos', 'Angelo', '41f6b14341c6a4c029ce75c50665244233cbc5c7', 1, 'no_image.jpg', 0, 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Pulang Lupa', 20, '186286e'),
+(8, 'Ellie Joy Dimaculangan', 'Ellie', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 3, 'no_image.jpg', 1, 'ellie34@gmail.com', '3885885', 'Female', 'Pilahan', 21, '186286e4');
 
 -- --------------------------------------------------------
 
@@ -197,6 +290,25 @@ INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VA
 --
 
 --
+-- Indexes for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `archived_feedback`
+--
+ALTER TABLE `archived_feedback`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `billing_list`
+--
+ALTER TABLE `billing_list`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -221,7 +333,7 @@ ALTER TABLE `service_requests`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_user_id` (`customer_user_id`);
+  ADD UNIQUE KEY `user_name` (`user_name`,`account_number`,`transaction_detail`,`transaction_time`) USING HASH;
 
 --
 -- Indexes for table `users`
@@ -242,34 +354,52 @@ ALTER TABLE `user_groups`
 --
 
 --
+-- AUTO_INCREMENT for table `announcements`
+--
+ALTER TABLE `announcements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `archived_feedback`
+--
+ALTER TABLE `archived_feedback`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `billing_list`
+--
+ALTER TABLE `billing_list`
+  MODIFY `id` int(30) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `service_requests`
 --
 ALTER TABLE `service_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_groups`
@@ -282,6 +412,12 @@ ALTER TABLE `user_groups`
 --
 
 --
+-- Constraints for table `archived_feedback`
+--
+ALTER TABLE `archived_feedback`
+  ADD CONSTRAINT `archived_feedback_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
 -- Constraints for table `feedback`
 --
 ALTER TABLE `feedback`
@@ -292,12 +428,6 @@ ALTER TABLE `feedback`
 --
 ALTER TABLE `service_requests`
   ADD CONSTRAINT `service_requests_ibfk_1` FOREIGN KEY (`customer_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `transactions`
---
-ALTER TABLE `transactions`
-  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`customer_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`
