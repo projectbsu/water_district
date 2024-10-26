@@ -3,7 +3,7 @@
 **Admin Login Details**
 
 Username: admin
-Password: admin
+Password: admin 
 
 **Staff User Login Details**
 

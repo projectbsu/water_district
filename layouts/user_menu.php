@@ -7,10 +7,15 @@
   </li>
   
   <li>
-    <a href="add_request.php">
-    <i class="glyphicon glyphicon-th-large"></i>
-      <span>Service Form</span>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-large"></i>
+      <span>Services</span>
     </a>
+    <ul class="nav submenu">
+      <li><a href="services.php">Service Category</a> </li>
+       <li><a href="add_request.php">Service Form</a> </li>
+       <li><a href="#">Service Status</a> </li>
+   </ul>
   </li>
 
   <li>
