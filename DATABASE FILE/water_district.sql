@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2024 at 02:17 AM
+-- Generation Time: Oct 26, 2024 at 04:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -192,26 +192,28 @@ INSERT INTO `feedback` (`id`, `user_id`, `user_name`, `reaction`, `feedback_text
 
 CREATE TABLE `service_requests` (
   `id` int(11) NOT NULL,
-  `customer_user_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `contact` varchar(15) NOT NULL,
-  `gender` varchar(10) NOT NULL,
+  `account_number` varchar(30) NOT NULL,
+  `gender` enum('Male','Female') NOT NULL,
   `barangay` varchar(100) NOT NULL,
-  `status` varchar(20) NOT NULL,
-  `date_of_request` datetime DEFAULT current_timestamp(),
-  `account_number` varchar(50) DEFAULT NULL
+  `status` enum('Pending','Approved','Denied') DEFAULT 'Pending',
+  `date_of_request` timestamp NOT NULL DEFAULT current_timestamp(),
+  `category` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `service_requests`
 --
 
-INSERT INTO `service_requests` (`id`, `customer_user_id`, `name`, `email`, `contact`, `gender`, `barangay`, `status`, `date_of_request`, `account_number`) VALUES
-(30, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', 'nmnas1114', 'Male', 'Anilao Proper', 'Pending', '2024-10-09 13:35:06', '09108615337'),
-(31, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Anilao Proper', 'Pending', '2024-10-09 13:55:09', 'nmnas1114'),
-(32, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', 'nmnas1114', 'Male', 'Anilao Proper', 'Pending', '2024-10-09 13:56:03', '09108615337'),
-(33, 1, 'Angelo Santos', 'angelosantospamplona@gmail.com', 'nmnas1114', 'Male', 'Anilao Proper', 'Pending', '2024-10-09 13:56:08', '09108615337');
+INSERT INTO `service_requests` (`id`, `name`, `email`, `contact`, `account_number`, `gender`, `barangay`, `status`, `date_of_request`, `category`) VALUES
+(2, 'Angelo Santos', 'angelosantospamplona@gmail.com', '092664773272', '186286e', 'Male', 'Anilao East', 'Pending', '2024-10-26 02:12:50', 'Relocation'),
+(6, 'Angelo Santos', 'angelosantospamplona@gmail.com', '092664773272', '186286e', 'Male', 'Anilao East', '', '2024-10-26 02:21:50', 'Pending'),
+(7, 'Angelo Santos', 'angelosantospamplona@gmail.com', '092664773272', '186286e', 'Male', 'Anilao East', '', '2024-10-26 02:22:50', 'Pending'),
+(8, 'Angelo Santos', 'angelosantospamplona@gmail.com', '092664773272', '186286e', 'Male', 'Anilao East', '', '2024-10-26 02:28:05', 'Pending'),
+(9, 'Ggelo Santos', 'angelosantospamplona@gmail.com', '092664773272', '186286e', 'Male', 'Anilao East', '', '2024-10-26 02:28:33', 'Pending'),
+(10, 'Ggelo Santos', 'angelosantospamplona@gmail.com', '092664773272', '186286e', 'Male', 'Anilao East', 'Pending', '2024-10-26 02:29:45', 'Reconnection');
 
 -- --------------------------------------------------------
 
@@ -258,7 +260,7 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`
 (2, 'John Walker', 'John', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, 'john@gmail.com', '09108615337', 'Male', 'Pulong Anahao', 25, 'yyyjyfu'),
 (3, 'Christopher Martinez', 'Christopher', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, 'christophermartinez11@gmail.com', '092664773272', 'Male', 'Pilahan', 40, '7437634'),
 (4, 'Natie Williams', 'Natie', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, 'natiewilliams12@gmail.com', '091234556', 'Female', 'Anilao Proper', 30, '18628655'),
-(5, 'Kevin', 'Kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 0, 'kevin0992@gmail.com', '0936762', 'Male', 'San Francisco', 32, '48uhgdfv'),
+(5, 'Kevin', 'Kevin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 3, 'no_image.png', 1, 'kevin0992@gmail.com', '0936762', 'Male', 'San Francisco', 32, '48uhgdfv'),
 (6, 'Gelo Santos', 'Angelo', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 1, 'dqw8itwc6.png', 1, 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Pulong Balibaguhan', 19, '6384736'),
 (7, 'Angelo Santos', 'Angelo', '41f6b14341c6a4c029ce75c50665244233cbc5c7', 1, 'no_image.jpg', 0, 'angelosantospamplona@gmail.com', '09108615337', 'Male', 'Pulang Lupa', 20, '186286e'),
 (8, 'Ellie Joy Dimaculangan', 'Ellie', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 3, 'no_image.jpg', 1, 'ellie34@gmail.com', '3885885', 'Female', 'Pilahan', 21, '186286e4');
@@ -325,8 +327,7 @@ ALTER TABLE `feedback`
 -- Indexes for table `service_requests`
 --
 ALTER TABLE `service_requests`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_user_id` (`customer_user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `transactions`
@@ -387,7 +388,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `service_requests`
 --
 ALTER TABLE `service_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -422,12 +423,6 @@ ALTER TABLE `archived_feedback`
 --
 ALTER TABLE `feedback`
   ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `service_requests`
---
-ALTER TABLE `service_requests`
-  ADD CONSTRAINT `service_requests_ibfk_1` FOREIGN KEY (`customer_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`

@@ -45,11 +45,12 @@ $all_requests = find_all_service_requests($status_filter); // Modify your functi
                         <th class="text-center" style="width: 50px;">#</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Contact</th>
                         <th>Account Number</th>
+                        <th>Contact</th>
                         <th>Gender</th>
                         <th>Barangay</th>
                         <th>Status</th>
+                        <th>Category</th>
                         <th>Date of Request</th>
                         <th class="text-center" style="width: 100px;">Actions</th>
                     </tr>
@@ -69,6 +70,7 @@ $all_requests = find_all_service_requests($status_filter); // Modify your functi
                                     <?php echo remove_junk(ucwords($request['status'])); ?>
                                 </span>
                             </td>
+                            <td><?php echo remove_junk(ucwords($request['category'])); ?></td>
                             <td><?php echo remove_junk($request['date_of_request']); ?></td>
                             <td class="text-center">
                                 <div class="btn-group">

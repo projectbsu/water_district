@@ -539,4 +539,5 @@ function delete_announcement($id) {
   return $stmt->execute();
 }
 
+
 ?>
