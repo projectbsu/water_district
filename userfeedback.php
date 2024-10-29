@@ -29,7 +29,7 @@ include_once('layouts/header.php');
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <strong>
-                    <span>All Feedback Transactions</span>
+                    <span>Feedback Transactions</span>
                 </strong>
                 <a href="archived_feedback.php" class="btn btn-info pull-right btn-sm"> View Archive List</a>
             </div>
