@@ -26,6 +26,7 @@
   $barangay_distribution = get_barangay_distribution();
   $total_categories = count_all_categories();
   $total_service_requests = count_all_service_requests();
+  $total_feedback = count_all_feedback();
 
 
     // Fetch data for feedback charts
@@ -87,6 +88,19 @@
        </div>
     </div>
 	</a>
+
+  <a href="userfeedback.php" style="color:black;">
+    <div class="col-md-3">
+       <div class="panel panel-box clearfix" style="height: 120px;">
+         <div class="panel-icon pull-left bg-blue2" style="height: 120px;">
+         <i class="glyphicon glyphicon-comment"></i>
+        </div>
+        <div class="panel-value pull-right">
+          <h2 class="margin-top"> <?php echo $total_feedback; ?></h2> <!-- Display feedback count here -->
+          <p class="text-muted">Feedback</p>
+        </div>
+       </div>
+    </div>
 	
 <?php include_once('layouts/header.php'); ?>
 <div class="row">

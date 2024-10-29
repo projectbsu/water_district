@@ -14,6 +14,7 @@ $customer_sex_distribution = get_customer_sex_distribution();
 $customer_barangay_distribution = get_customer_barangay_distribution();
 $total_categories = count_all_categories();
 $total_service_requests = count_all_service_requests();
+$total_feedback = count_all_feedback();
 
 // Fetch data for feedback charts
 $feedback_reaction_distribution = get_feedback_reaction_distribution(); // Reaction distribution
@@ -69,19 +70,18 @@ include_once('layouts/header.php');
     </div>
 	</a>
 	
-	<a href="transactions.php" style="color:black;">
+  <a href="userfeedback.php" style="color:black;">
     <div class="col-md-3">
        <div class="panel panel-box clearfix" style="height: 120px;">
-         <div class="panel-icon pull-left bg-green" style="height: 120px;">
-          <i class="glyphicon glyphicon-tasks"></i>
+         <div class="panel-icon pull-left bg-blue2" style="height: 120px;">
+         <i class="glyphicon glyphicon-comment"></i>
         </div>
         <div class="panel-value pull-right">
-          <h2 class="margin-top"><?php echo $total_transactions ?></h2>
-          <p class="text-muted">Transaction</p>
+          <h2 class="margin-top"> <?php echo $total_feedback; ?></h2> <!-- Display feedback count here -->
+          <p class="text-muted">Feedback</p>
         </div>
        </div>
     </div>
-	</a>
 
 
     <div class="col-md-12">

@@ -532,5 +532,12 @@ function delete_announcement($id) {
   return $stmt->execute();
 }
 
+function count_all_feedback() {
+  global $db;
+  $sql = "SELECT COUNT(*) AS total FROM feedback";
+  $result = $db->query($sql);
+  return $result ? $result->fetch_assoc()['total'] : 0;
+}
+
 
 ?>
