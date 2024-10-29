@@ -40,9 +40,9 @@ include_once('layouts/header.php');
                             <th>ID</th> <!-- New column for ID -->
                             <th>Customer Name</th>
                             <th>Rating</th>
-                            <th>Feedback</th>
+                            <th>Feedback Text</th>
                             <th>Sentiment Score</th> <!-- New column for sentiment score -->
-                            <th>Date</th>
+                            <th>Feedback Date Recieved</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -57,28 +57,33 @@ include_once('layouts/header.php');
                 );
                 ?>
 
-                <tbody>
-                    <?php foreach ($all_feedback as $feedback): ?>
-                    <tr>
-                        <td><?php echo remove_junk((int)$feedback['id']); ?></td> <!-- Display ID -->
-                        <td><?php echo remove_junk(ucwords($feedback['user_name'])); ?></td>
-                        <td>
-                            <?php
-                            // Check if the reaction exists in the map, and display the mapped reaction or default to the original value
-                            $reaction = $feedback['reaction'];
-                            echo isset($reaction_map[$reaction]) ? remove_junk($reaction_map[$reaction]) : remove_junk($reaction);
-                            ?>
-                        </td>
-                        <td><?php echo remove_junk($feedback['feedback_text']); ?></td>
-                        <td><?php echo remove_junk($feedback['sentiment_score']); ?></td> <!-- Display sentiment score -->
-                        <td><?php echo read_date($feedback['created_at']); ?></td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="archive_feedback.php?id=<?php echo (int)$feedback['id']; ?>" class="btn btn-warning btn-xs">Archive</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <tbody>
+                        <?php 
+                        $counter = 1; // Initialize a counter variable
+                        foreach ($all_feedback as $feedback): ?>
+                        <tr>
+                            <td><?php echo $counter++; ?></td> <!-- Display sequential count -->
+                            <td><?php echo remove_junk(ucwords($feedback['user_name'])); ?></td>
+                            <td>
+                                <?php
+                                // Check if the reaction exists in the map, and display the mapped reaction or default to the original value
+                                $reaction = $feedback['reaction'];
+                                echo isset($reaction_map[$reaction]) ? remove_junk($reaction_map[$reaction]) : remove_junk($reaction);
+                                ?>
+                            </td>
+                            <td><?php echo remove_junk($feedback['feedback_text']); ?></td>
+                            <td style="text-align: center;" ><?php echo remove_junk($feedback['sentiment_score']); ?></td> <!-- Display sentiment score -->
+                            <td><?php echo read_date($feedback['created_at']); ?></td>
+                            <td style="text-align: center;">
+                                <div class="btn-group">
+                                    <a href="archive_feedback.php?id=<?php echo (int)$feedback['id']; ?>" class="btn btn-warning btn-xs">Archive</a>
+                                </div>
+                            </td>
+
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+
                 </tbody>
                 </table>
             </div>

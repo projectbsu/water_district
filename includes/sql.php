@@ -274,14 +274,6 @@ function get_age_distribution() {
   return $ages;
 }
 
-// Count all transactions
-function count_all_transactions() {
-  global $db;
-  $query = "SELECT COUNT(*) as total FROM transactions"; // Adjust the table name if it's different
-  $result = $db->query($query);
-  return $result->fetch_assoc()['total'];
-}
-
 // Count all categories
 function count_all_categories() {
   global $db;

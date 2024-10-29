@@ -22,7 +22,7 @@
       <span>Services</span>
     </a>
     <ul class="nav submenu">
-       <li><a href="categorie.php">Categories</a> </li>
+       <li><a href="categorie.php"> Service Categories</a> </li>
        <li><a href="service_requests.php">Service Request</a> </li>
    </ul>
   </li>
@@ -35,13 +35,6 @@
        <li><a href="billing_list.php">Billing List</a> </li>
        <li><a href="service_requests.php">Billing Report</a> </li>
    </ul>
-  </li>
-  
-  <li>
-    <a href="transactions.php" >
-      <i class="glyphicon glyphicon-tasks"></i>
-      <span>Transaction</span>
-    </a>
   </li>
 
   <li>

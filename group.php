@@ -19,7 +19,6 @@
         <span class="glyphicon glyphicon-th"></span>
         <span>Groups</span>
      </strong>
-       <a href="add_group.php" class="btn btn-info pull-right btn-sm"> Add New Group</a>
     </div>
      <div class="panel-body">
       <table class="table table-bordered">
@@ -52,9 +51,6 @@
                 <a href="edit_group.php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Edit">
                   <i class="glyphicon glyphicon-pencil"></i>
                </a>
-                <a href="delete_group.php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Remove">
-                  <i class="glyphicon glyphicon-remove"></i>
-                </a>
                 </div>
            </td>
           </tr>

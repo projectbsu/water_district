@@ -30,7 +30,7 @@ if ($status_filter === 'all') {
             <div class="panel-heading clearfix">
                 <strong>
                     <span class="glyphicon glyphicon-th"></span>
-                    <span>Service Requests</span>
+                    <span>Service Requests Transaction</span>
                 </strong>
                 <a href="add_request.php" class="btn btn-info pull-right">Add New Request</a>
             </div>

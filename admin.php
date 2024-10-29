@@ -24,7 +24,6 @@
   $age_distribution = get_age_distribution(); // Age distribution of users
   $sex_distribution = get_sex_distribution(); // Fetch sex distribution data
   $barangay_distribution = get_barangay_distribution();
-  $total_transactions = count_all_transactions();
   $total_categories = count_all_categories();
   $total_service_requests = count_all_service_requests();
 
@@ -89,21 +88,6 @@
     </div>
 	</a>
 	
-	<a href="transactions.php" style="color:black;">
-    <div class="col-md-3">
-       <div class="panel panel-box clearfix" style="height: 120px;">
-         <div class="panel-icon pull-left bg-green" style="height: 120px;">
-          <i class="glyphicon glyphicon-tasks"></i>
-        </div>
-        <div class="panel-value pull-right">
-          <h2 class="margin-top"><?php echo $total_transactions ?></h2>
-          <p class="text-muted">Transaction</p>
-        </div>
-       </div>
-    </div>
-	</a>
-</div>
-
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
 </div>

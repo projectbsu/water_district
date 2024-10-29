@@ -12,7 +12,6 @@ $active_customers = count_active_customers();
 $customer_age_distribution = get_customer_age_distribution();
 $customer_sex_distribution = get_customer_sex_distribution();
 $customer_barangay_distribution = get_customer_barangay_distribution();
-$total_transactions = count_all_transactions();
 $total_categories = count_all_categories();
 $total_service_requests = count_all_service_requests();
 
