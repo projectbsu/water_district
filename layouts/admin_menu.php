@@ -43,14 +43,10 @@
       <span>Annoucement</span>
     </a>
   </li>
-  
+
   <li>
-    <a href="#" class="submenu-toggle">
-      <i class="glyphicon glyphicon-comment"></i>
+    <a href="userfeedback.php" >
+    <i class="glyphicon glyphicon-comment"></i>
       <span>Feedback</span>
     </a>
-    <ul class="nav submenu">
-       <li><a href="userfeedback.php"> User Feedback</a> </li>
-       <li><a href="feedback_analytics.php">Feedback Analytics</a> </li>
-   </ul>
   </li>
